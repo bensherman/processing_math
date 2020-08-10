@@ -1,36 +1,23 @@
 
-w = 900
-h = 900
-rate = 0
-x = .5
+width = 500
+height = 500
 
 def setup():
-    size(w,h)
+    size(width, height)
     background(13, 67, 69)
     stroke(26, 134, 138)
-    strokeWeight(1.5)
+    strokeWeight(100)
 
-    
-def logisticmap(x, r):
-    print "new lm: ", x, r
-    while True:
-        x = r * x * (1 - x)
-        yield x
+def logistic(r, x):
+    return r * x * (1 - x)
 
 def draw():
-    global rate
-    global stroke_color
-
-    lm = logisticmap(.5, rate)
-    y = lm.next()
-
-    for i in range(100):
-        x = y
-        y = lm.next()
-        point(x * w, h - (y * h))
-
-            
-    rate += .005
-    print "rate: ", rate
-    if x < 0:
-        noLoop()
+    rate = 2.0
+    x = .5
+    
+    for _ in range(10):
+        x = logistic(rate, x)
+        print x
+    
+    
+    noLoop()
