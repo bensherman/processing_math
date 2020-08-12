@@ -9,7 +9,7 @@ points = width / chunksize
     
 # global, modified by kepresses
 rate = 2.99
-starting_population = .6
+starting_p = .6
 
 
 def setup():
@@ -22,59 +22,57 @@ def logistic(r, x):
 
 def draw():
     global rate
-    global starting_population
+    global starting_p
     
     background(13, 67, 69)
 
     
-    if starting_population > 1:
-        starting_population = 1
-    if starting_population < 0:
-        starting_population = 0
+    if starting_p > 1:
+        starting_p = 1
+    if starting_p < 0:
+        starting_p = 0
 
     # osciuliscope blue
     # background(13, 67, 69)
         
     textSize(chunksize)
     text("rate: {}".format(rate), chunksize, chunksize)
-    text("starting_population: {}".format(starting_population), chunksize, chunksize *2)
+    text("starting_p: {}".format(starting_p), chunksize, chunksize *2)
     
-    population = starting_population
+    p = starting_p
     old_xpos = 0
-    old_ypos = height - (height * starting_population)
+    old_ypos = height - (height * starting_p)
     
     for i in range(points):
         xpos = old_xpos + chunksize
-        ypos = height - (height * population)
+        ypos = height - (height * p)
         
         line(old_xpos, old_ypos, xpos, ypos)
         
         old_xpos = xpos
         old_ypos = ypos
         
-        population = logistic(rate, population)        
-        
-        
+        p = logistic(rate, p)        
+            
         
     if keyPressed:
         if key == 's':
-            rate -= .001
+            rate -= .01
             if rate < 0:
                 rate = 0
         if key == 'w':
-            rate += .001
+            rate += .01
         
         if key == 'a':
-            starting_population -= .001
+            starting_p -= .005
+            if starting_p < 0:
+                starting_p = 0
         
         if key == 'd':
-            starting_population += .001
-            if starting_population < 0:
-                starting_population = 0        
-    
-def keyPressed():
-  global rate
-    
+            starting_p += .005
+            if starting_p > 1:
+                starting_p = 1       
+
     
 
     
